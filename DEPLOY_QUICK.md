@@ -12,6 +12,8 @@ npx wrangler login
 npm run deploy
 ```
 
+**Note:** The project name will be `mandalikatour`
+
 That's it! Your site will be live on Cloudflare Pages.
 
 ## Manual Deploy (Alternative)

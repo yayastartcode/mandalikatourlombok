@@ -77,13 +77,29 @@
 }
 ```
 
-### _redirects (for SPA routing)
-Located in `public/_redirects`:
-```
-/* /index.html 200
+### _routes.json (for SPA routing)
+Located in `public/_routes.json`:
+```json
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": ["/assets/*", "/images/*", "/vite.svg", "/favicon.png"]
+}
 ```
 
-This ensures all routes are handled by the React Router.
+This tells Cloudflare Pages to serve the SPA for all routes except static assets.
+
+### _headers (for security)
+Located in `public/_headers`:
+```
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-XSS-Protection: 1; mode=block
+```
+
+Adds security headers to all responses.
 
 ## Custom Domain Setup
 
@@ -154,10 +170,10 @@ nvm use 22
 ```
 
 ### 404 Errors on Routes
-Ensure `_redirects` file is in the `public/` folder and contains:
-```
-/* /index.html 200
-```
+Cloudflare Pages automatically handles SPA routing. If you experience issues:
+1. Verify `_routes.json` is in `public/` folder
+2. Rebuild: `npm run build`
+3. Check that `dist/_routes.json` exists after build
 
 ### Images Not Loading
 Verify images are in `public/images/` directory and referenced as `/images/filename.jpg`
